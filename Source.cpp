@@ -7,6 +7,7 @@
 #define KEY_DOWN 80
 #define KEY_RIGHT 77
 #define KEY_ENTER 13
+#define KEY_ESC_EXIT 27
 
 using namespace std;
 using namespace conmanip;
@@ -39,20 +40,28 @@ public:
 		gotoxy(getX(), getY());
 		cout
 			//		<< settextcolor(console_text_colors::light_white)
-			<< endl << "\t       Scientific Calculator"
-			<< endl << " ==============================================="
-			<< endl << "|\t\t\t\t\t\t|" << endl << "|\t\t\t\t\t\t|"
-			<< endl << "|\t\t\t\t\t\t|" << endl << "|\t\t\t\t\t\t|"
-			<< endl << "|===============================================|"
-			<< endl << "|\t7\t||\t8\t||\t9\t|"
-			<< endl << "|===============================================|"
-			<< endl << "|\t4\t||\t5\t||\t6\t|"
-			<< endl << "|===============================================|"
-			<< endl << "|\t1\t||\t2\t||\t3\t|"
-			<< endl << "|===============================================|"
-			<< endl << "|\t.\t||\t0\t||\t=\t|"
-			<< endl << "|===============================================|";
+			<< endl << "\t\t       Scientific Calculator"
+			<< endl << "\t ==============================================="
+			<< endl << "\t|\t\t\t\t\t\t|" << endl << "\t|\t\t\t\t\t\t|"
+			<< endl << "\t|\t\t\t\t\t\t|" << endl << "\t|\t\t\t\t\t\t|"
+			<< endl << "\t|===============================================|"
+			<< endl << "\t|\t7\t||\t8\t||\t9\t|"
+			<< endl << "\t|===============================================|"
+			<< endl << "\t|\t4\t||\t5\t||\t6\t|"
+			<< endl << "\t|===============================================|"
+			<< endl << "\t|\t1\t||\t2\t||\t3\t|"
+			<< endl << "\t|===============================================|"
+			<< endl << "\t|\t.\t||\t0\t||\t=\t|"
+			<< endl << "\t|===============================================|";
+		gotoxy(0,17);
+
+		cout
+			<< "1- Press ESC to exit" << endl
+			<< "2- Press F1 to turn on Statistical Functionality Mode" << endl
+			<< "3- Press F2 to turn on Basic Calculus Mode" << endl
+			<< "4- Press F3 to turn on Linear Algebra Mode" << endl;
 	}
+
 
 	void key_up()
 	{
@@ -73,7 +82,7 @@ public:
 	}
 	void key_left()
 	{
-		if (getX() > 8)
+		if (getX() > 16)
 		{
 			setX(getX() - 16);
 			gotoxy(getX(), getY());
@@ -82,7 +91,7 @@ public:
 	}
 	void key_right()
 	{
-		if (getX() < 32)
+		if (getX() < 48)
 		{
 			setX(getX() + 16);
 			gotoxy(getX(), getY());
@@ -107,10 +116,27 @@ public:
 
 };
 
+
+class spreadsheet
+{
+	int length, width;
+public:
+	spreadsheet(){ length = 600; width = 600; }
+	void setConsoleSize()
+	{
+		HWND console = GetConsoleWindow();
+		RECT r;
+		GetWindowRect(console, &r); //stores the console's current dimensions
+		MoveWindow(console, r.left, r.top, this->length, this->width, TRUE); // 800 width, 100 height
+	}
+};
+
+
 int main()
 {
+	spreadsheet s; s.setConsoleSize();
 	viewCalculatorConsole c;
-	c.calculator_KEYS(); c.setY(8); c.setX(8); c.gotoxy(c.getX(), c.getY());
+	c.calculator_KEYS(); c.setY(8); c.setX(16); c.gotoxy(c.getX(), c.getY());
 
 
 	int X = 1, Y = 1;
@@ -142,12 +168,14 @@ int main()
 			case KEY_ENTER:
 
 				break;
+			case KEY_ESC_EXIT:
+				c.gotoxy(0, 0);
+				cout << "EXITING......";
+				loop = false;
+				break;
 				
 			}
 		}
 	}
-	
-
-	_getch();
 	return 0;
 }
