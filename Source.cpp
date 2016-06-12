@@ -1,5 +1,6 @@
 #include<iostream>
 #include<conio.h>
+#include<string>
 #include"conmanip.h"
 
 #define KEY_UP 72
@@ -12,10 +13,13 @@
 #define KEY_F2 60
 #define KEY_F3 61
 #define KEY_F4 62
+#define KEY_BACKSPACE 8
 
 using namespace std;
 using namespace conmanip;
 
+string value;
+int intValue;
 
 class viewCalculatorConsole
 {
@@ -78,7 +82,6 @@ public:
 			gotoxy(getX(), getY());
 		}
 	}
-
 	void key_down()
 	{
 		if (getY() < 14)
@@ -106,9 +109,56 @@ public:
 		}
 	}
 
-	void key_enter()
+	string key_enter()
+	{
+		if (getY() == 8)
+		{
+			if (getX() == 16)
+				return "7";
+			else if (getX() == 32)
+				return "8";
+			else if (getX() == 48)
+				return "9";
+		}
+		else if (getY() == 10)
+		{
+			if (getX() == 16)
+				return "4";
+			else if (getX() == 32)
+				return "5";
+			else if (getX() == 48)
+				return "6";
+		}
+		else if (getY() == 12)
+		{
+			if (getX() == 16)
+				return "1";
+			else if (getX() == 32)
+				return "2";
+			else if (getX() == 48)
+				return "3";
+		}
+		else if (getY() == 14)
+		{
+			if (getX() == 16)
+				return ".";
+			else if (getX() == 32)
+				return "0";
+			else if (getX() == 48)
+				return "=";
+		}	
+	}
+
+	void backspace()
 	{
 
+		if (value != "\0")
+		{
+			cout << "\b \b";
+			
+			//value = "\0";
+		}
+		
 	}
 
 	void gotoxy(int cols, int rows)
@@ -124,11 +174,11 @@ public:
 };
 
 
-class spreadsheet
+class console
 {
 	int length, width;
 public:
-	spreadsheet(){ length = 600; width = 600; }
+	console(){ length = 600; width = 600; }
 	void setConsoleSize()
 	{
 		HWND console = GetConsoleWindow();
@@ -141,12 +191,13 @@ public:
 
 int main()
 {
-	spreadsheet s; s.setConsoleSize();
+	int x = 9 , y = 4;
+	
+	//spreadsheet s; s.setConsoleSize();
 	viewCalculatorConsole c;
 	c.calculator_KEYS(); c.setY(8); c.setX(16); c.gotoxy(c.getX(), c.getY());
+	string var;
 
-
-	int X = 1, Y = 1;
 	char key;
 	bool loop = true;
 	while (loop)
@@ -158,31 +209,41 @@ int main()
 			{
 			case KEY_UP:
 				c.key_up();
-				Y -= 1;
 				break;
 			case KEY_DOWN:
 				c.key_down();
-				Y += 1;
 				break;
 			case KEY_LEFT:
 				c.key_left();
-				X -= 1;
 				break;
 			case KEY_RIGHT:
 				c.key_right();
-				X += 1;
 				break;
 			case KEY_ENTER:
-
+				
+				var = c.key_enter();
+				value = value + var;
+				x++;
+				c.gotoxy(x, y);
+				
+				cout << var;
+				
+				break;
+			case KEY_BACKSPACE:
+				c.backspace();
+				x--;
+				c.gotoxy(x, y);
 				break;
 			case KEY_ESC_EXIT:
 				c.gotoxy(0, 0);
 				cout << "EXITING......";
 				loop = false;
-				break;
-				
-			}
+				break;	
+			}	
 		}
 	}
+	intValue = stoi(value);
+	
+	_getche();
 	return 0;
 }
