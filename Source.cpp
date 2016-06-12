@@ -8,6 +8,10 @@
 #define KEY_RIGHT 77
 #define KEY_ENTER 13
 #define KEY_ESC_EXIT 27
+#define KEY_F1 59
+#define KEY_F2 60
+#define KEY_F3 61
+#define KEY_F4 62
 
 using namespace std;
 using namespace conmanip;
@@ -53,13 +57,16 @@ public:
 			<< endl << "\t|===============================================|"
 			<< endl << "\t|\t.\t||\t0\t||\t=\t|"
 			<< endl << "\t|===============================================|";
-		gotoxy(0,17);
+		
+			setX(0); setY(25);
+			gotoxy(getX(), getY());
+			cout
+				<< "\tF1 : turn on Basic Arithmatic Mode" << endl
+				<< "\tF2 : turn on Statistical Functionality Mode" << endl 
+				<< "\tF3 : turn on Basic Calculus Mode" << endl 
+				<< "\tF4 : turn on Linear Algebra Mode" << endl 
+				<< endl << "\t  \tESC : EXIT";
 
-		cout
-			<< "1- Press ESC to exit" << endl
-			<< "2- Press F1 to turn on Statistical Functionality Mode" << endl
-			<< "3- Press F2 to turn on Basic Calculus Mode" << endl
-			<< "4- Press F3 to turn on Linear Algebra Mode" << endl;
 	}
 
 
