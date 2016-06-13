@@ -230,9 +230,10 @@ int main()
 				
 				break;
 			case KEY_BACKSPACE:
-				c.backspace();
 				x--;
-				c.gotoxy(x, y);
+				c.backspace();
+				
+				//c.gotoxy(x, y);
 				break;
 			case KEY_ESC_EXIT:
 				c.gotoxy(0, 0);
