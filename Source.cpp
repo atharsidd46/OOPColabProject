@@ -18,14 +18,30 @@
 using namespace std;
 using namespace conmanip;
 
-string value;
-int intValue;
+string value = "";
+int intvalue = 0;
+// static function to be added for storage of values
+//class calculator
+//{
+//private:
+	float array[50];
+//	string value;
+//	int intvalue;
+//public:
+//	calculator(){}
+//	void setSvalue(string s){ value = s; }
+//	string getSvalue(){ return value; }
+//
+//	void setintValue(int n){ intvalue = n; }
+//	int getintValue(){ return intvalue; }
+//	
+//};
 
 class viewCalculatorConsole
 {
 
 private:
-	
+	//calculator c;
 	int x_axis, y_axis; //for X-Y COORDINATES and Cursor movement.
 	int rows, cols;  // for printing numbers in ROWS and COLUMNS.
 
@@ -192,7 +208,7 @@ public:
 int main()
 {
 	int x = 9 , y = 4;
-	
+	//calculator cal;
 	//spreadsheet s; s.setConsoleSize();
 	viewCalculatorConsole c;
 	c.calculator_KEYS(); c.setY(8); c.setX(16); c.gotoxy(c.getX(), c.getY());
@@ -223,6 +239,7 @@ int main()
 				
 				var = c.key_enter();
 				value = value + var;
+				//cal.setSvalue(cal.getSvalue() + var);
 				x++;
 				c.gotoxy(x, y);
 				
@@ -243,7 +260,10 @@ int main()
 			}	
 		}
 	}
-	intValue = stoi(value);
+	int intvalue = stoi(value);
+	intvalue = intvalue + intvalue;
+	cout << intvalue;
+	//cal.setintValue(stoi(cal.getSvalue()));
 	
 	_getche();
 	return 0;
